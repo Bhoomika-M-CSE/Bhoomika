@@ -1,0 +1,156 @@
+typedef struct node{
+    char *st;
+    int top;
+    int capacity;
+}stack;
+stack* init(int capacity){
+    struct node* node=(struct node*)malloc (sizeof(struct node));
+    node->top=-1;
+    node->capacity=capacity;
+    node ->st=(char*)malloc(capacity*sizeof(char));
+    return node;
+}
+void push(stack* node,char x ){
+    if(node->top==node->capacity-1){
+    printf("stack is full");
+    return;}
+    node->st[++node->top]=x;
+}
+char pop(stack * node){
+    return node->st[node->top--];
+}
+bool backspaceCompare(char* s, char* t) {
+    int capacity=50;
+    stack * node=init(capacity);
+    int r,i=0;
+    while(*s!='\0'){
+        if(*s=='#'){
+        char a;
+        a=pop(node);
+        }
+        else push(node,*s);
+        s++;
+    }
+    char arr1[capacity];
+    while(node->top>=0){
+        arr1[i++]=pop(node);
+    }
+    free(node);
+    stack * node1=init(capacity);
+    while(*t!='\0'){
+        if(*t=='#'){
+        char a;
+        a=pop(node1);
+        }
+        else push(node1,*t);
+        t++;
+    }
+    char arr2[capacity];
+    int j=0;
+   while(node1->top>=0){
+        arr2[j++]=pop(node1);
+    }
+    free(node1);
+    for (int k=0;k<i;k++){
+        if(arr1[k]==arr2[k]) r=1;
+        else r=0;
+    }
+    return r;
+}
+
+linked list
+
+Conversation opened. 1 read message.
+
+Skip to content
+Using BMS College of Engineering Mail with screen readers
+in:sent 
+1 of 17
+(no subject)
+
+Bhoomika M <bhoomikam.cs23@bmsce.ac.in>
+1:11 PM (7 hours ago)
+to Bhoomika
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+
+void push(struct node* *head_ref,int new_data){
+    struct node* new_node=(struct node*)malloc(sizeof(struct node));
+    new_node->data =new_data;
+    new_node->next=*head_ref;
+    *head_ref=new_node;
+}
+
+void appendatlast(struct node* *head_ref,int new_data){
+    struct node* new_node=(struct node*)malloc(sizeof(struct node));
+    new_node->data =new_data;
+    new_node->next=NULL;
+    if(*head_ref==NULL){
+        *head_ref=new_node;
+        return;
+    }
+    struct node* temp=*head_ref;
+    while(temp->next!=NULL){
+        temp=temp->next;}
+        temp->next=new_node;
+
+}
+
+void appendatposition(struct node* *head_ref,int new_data,int pos){
+     struct node* new_node=(struct node*)malloc(sizeof(struct node));
+    new_node->data =new_data;
+    struct node * temp=*head_ref;
+    if(pos==1){
+        new_node->next=temp;
+        *head_ref=new_node;
+        return;
+    }
+    else{
+        for(int i=1; i<pos-1; i++)
+           {temp=temp->next;
+        new_node->next=temp->next;}
+        temp->next=new_node->next;
+    }
+}
+
+void display(struct node* node){
+    while(node!=NULL){
+        printf("%d\n",node->data);
+        node=node->next;
+    }
+}
+
+void main(){
+     struct node* head=NULL;
+     int n;
+     while(1){
+        printf("1. push at first\n2. push at last\n3. push at any position\n4. display");
+        scanf("%d",&n);
+        switch(n){
+            case 1:{ int x;
+                    printf("enter data");
+                    scanf("%d",&x);
+                    push(&head,x);
+                    break;}
+            case 2: {int y;
+                    printf("enter data");
+                    scanf("%d",&y);
+                    appendatlast(&head,y);
+                    break;}
+            case 3: {int a,b;
+                    printf("enter data and position");
+                    scanf("%d%d",&a,&b);
+                    appendatposition(&head,a,b);
+                    break;}
+            case 4: display(head);
+                    break;
+            default: exit(0);
+        }
+     }
+}
+
