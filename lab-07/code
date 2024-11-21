@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+
+void insert(struct node**head,int x){
+   struct node* obj=(struct node* )malloc (sizeof(struct node));
+   obj->data=x;
+   obj->next=*head;
+   *head=obj;
+}
+
+void  sorting(struct node**head){
+   struct node* ptr=*head;
+   struct node *nextptr;
+   int item;
+   if(*head ==NULL) printf("empty");
+   for(ptr=*head; ptr!=NULL;ptr=ptr->next){
+     for(nextptr=ptr->next; nextptr!=NULL; nextptr=nextptr->next){
+        if(ptr->data>nextptr->data){
+           item=ptr->data;
+           ptr->data=nextptr->data;
+           nextptr->data=item;
+        }
+     }
+   }
+
+}
+
+void reverse(struct node**head){
+   struct node*ptr=*head;
+   struct node*prev, *ptr1;
+   if(*head==NULL) printf("empty");
+   else{
+      while(ptr!=NULL){
+        ptr1= ptr->next;
+        ptr->next=prev;
+        prev=ptr;
+        ptr=ptr1;
+      }
+      *head=prev;
+   }
+
+}
+
+void concatenate(struct node**head, struct node**head1){
+    struct node *ptr1=*head, *ptr2=*head1;
+   if(ptr1!=NULL && ptr2!=NULL){
+      if(ptr1->next==NULL)
+         ptr1->next=ptr2;
+      else
+         concatenate(&ptr1->next, &ptr2);
+   }
+}
+
+void display(struct node**head){
+   struct node*ptr=*head;
+   while(ptr!=NULL){
+       printf("%d\t",ptr->data);
+       ptr=ptr->next;
+   }
+   printf("\n");
+}
+
+void main(){
+  struct node* head=NULL, *head1=NULL;
+  insert (&head,43);
+  insert (&head,78);
+  insert (&head,12);
+  insert (&head,19);
+  insert (&head,69);
+  display(&head);
+  insert (&head1,84);
+  insert (&head1,43);
+  insert (&head1,134);
+  insert (&head1,34);
+  insert (&head1,245);
+  display(&head1);
+  sorting(&head);
+  display(&head);
+  reverse(&head);
+  display(&head);
+  concatenate(&head, &head1);
+  display(&head);
+
+}
+
+
